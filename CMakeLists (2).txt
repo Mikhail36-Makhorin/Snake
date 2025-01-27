@@ -1,0 +1,30 @@
+cmake_minimum_required(VERSION 3.10)
+project(SnakeGame)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(SDL2 REQUIRED)
+
+include_directories(${SDL2_INCLUDE_DIR})
+include_directories(${PROJECT_SOURCE_DIR})         # Корень проекта
+include_directories(${PROJECT_SOURCE_DIR}/src)     # src
+include_directories(${PROJECT_SOURCE_DIR}/exceptions)  # exceptions
+
+# Собираем все .cpp из папки exceptions
+file(GLOB EXCEPTIONS_SOURCES
+    "${PROJECT_SOURCE_DIR}/exceptions/*.cpp"
+)
+
+# Собираем все .cpp из папки src
+file(GLOB SRC_SOURCES
+    "${PROJECT_SOURCE_DIR}/src/*.cpp"
+)
+
+add_executable(SnakeGame
+    main.cpp
+    ${EXCEPTIONS_SOURCES}
+    ${SRC_SOURCES}
+)
+
+target_link_libraries(SnakeGame ${SDL2_LIBRARIES})
